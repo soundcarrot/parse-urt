@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func Test_parseUpstreamResponseTime(t *testing.T) {
+func Test_ParseUpstreamResponseTime(t *testing.T) {
 	tests := []struct {
 		name   string
 		field  string
@@ -91,7 +91,7 @@ func Test_parseUpstreamResponseTime(t *testing.T) {
 		}
 
 		t.Run(tt.name, func(t *testing.T) {
-			uRT, err := parseUpstreamResponseTime(tt.field)
+			uRT, err := ParseUpstreamResponseTime(tt.field)
 			if (err != nil) != tt.hasErr || uRT != tt.uRT {
 				t.Errorf(
 					"parseUpstreamResponseTime(): got: uRT: %v, hasErr: %v, expected: uRT: %v, hasErr: %v,",
