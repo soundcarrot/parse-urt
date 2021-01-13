@@ -8,13 +8,13 @@ import (
 
 // ParseUpstreamResponseTime parses nginx upstream response time variable value
 // https://nginx.org/en/docs/http/ngx_http_upstream_module.html#var_upstream_response_time
-func ParseUpstreamResponseTime(responseTimeField string) (responseTime uint32, err error) {
+func ParseUpstreamResponseTime(responseTimeField string) (responseTime float64, err error) {
 	// Special case: no value for upstream response time
 	if responseTimeField == "-" {
 		return 0, nil
 	}
 
-	var groupURT []uint32 = []uint32{0}
+	var groupURT []float64 = []float64{0}
 	var fields []string = strings.Split(responseTimeField, " ")
 	var parseError error = fmt.Errorf("bad field value: '%s'", responseTimeField)
 
@@ -48,12 +48,11 @@ func ParseUpstreamResponseTime(responseTimeField string) (responseTime uint32, e
 				return 0, parseError
 			}
 
-			uv, err := strconv.ParseFloat(v[:len(v)-1], 64)
+			urt, err := strconv.ParseFloat(v[:len(v)-1], 64)
 			if err != nil {
 				return 0, err
 			}
 
-			urt := uint32(uv * 1000)
 			gidx := len(groupURT) - 1
 			if groupURT[gidx] < urt {
 				groupURT[gidx] = urt
@@ -67,12 +66,11 @@ func ParseUpstreamResponseTime(responseTimeField string) (responseTime uint32, e
 				return 0, parseError
 			}
 
-			uv, err := strconv.ParseFloat(v, 64)
+			urt, err := strconv.ParseFloat(v, 64)
 			if err != nil {
 				return 0, err
 			}
 
-			urt := uint32(uv * 1000)
 			gidx := len(groupURT) - 1
 			if groupURT[gidx] < urt {
 				groupURT[gidx] = urt
