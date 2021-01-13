@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// ParseUpstreamResponseTime parses nginx upstream response time variable value
 // https://nginx.org/en/docs/http/ngx_http_upstream_module.html#var_upstream_response_time
 func ParseUpstreamResponseTime(responseTimeField string) (responseTime uint32, err error) {
 	// Special case: no value for upstream response time
